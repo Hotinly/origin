@@ -2,9 +2,11 @@ package com.holy.sboot.origin.controller;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,11 +42,23 @@ public class IntegrateController extends BaseCtrl {
 			Statement stmt = conn.createStatement();
 			// stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
 			// stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
-			ResultSet rs = stmt.executeQuery("SELECT tick FROM ticks");
+			// ResultSet rs = stmt.executeQuery("SELECT tick FROM ticks");
+			String sql = "SELECT * FROM sys_user WHERE ID = 2";
+			ResultSet rs = stmt.executeQuery(sql);
 
-			List<String> list = new ArrayList<>();
+			List<Map<String, Object>> list = new ArrayList<>();
+			ResultSetMetaData metaData = rs.getMetaData();
+			int columnCount = metaData.getColumnCount();
 			while (rs.next()) {
-				list.add("Read from DB: " + rs.getTimestamp("tick"));
+				// list.add("Read from DB: " + rs.getTimestamp("tick"));
+				// ResultSet 记录的是条数， .getString(index)获取的才是行中某列值。
+				// list.add(rs.getString(1));
+				// list.add(rs.getString(2));
+				Map<String, Object> rowMap = new HashMap<>();
+				for (int i = 1; i <= columnCount; i++) {
+					rowMap.put(metaData.getColumnName(i), rs.getObject(i));
+				}
+				list.add(rowMap);
 			}
 			conn.close();
 			logger.info(list);
@@ -59,4 +73,5 @@ public class IntegrateController extends BaseCtrl {
 			return "integration/error";
 		}
 	}
+
 }
