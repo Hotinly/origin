@@ -3,6 +3,9 @@ package com.holy.sboot.origin.basic;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.github.pagehelper.Page;
+
+
 /**
  * 基础的公共信息类
  * 
@@ -10,7 +13,7 @@ import java.util.Date;
  * @date 2017年6月7日 下午3:05:35
  * @ref
  */
-public class BaseEty implements Serializable {
+public class BaseEty<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,11 +25,18 @@ public class BaseEty implements Serializable {
 	private String updateBy;
 	// 修改日期
 	private Date updateDate;
-	// 状态(0：无效； 1：有效)
+	// 状态(0：无效； 1：有效; 2：处理中)
 	private String status;
 	// 备注
 	private String remark;
 
+	// 实体id
+	protected Long id;
+	// 当前用户
+	protected String currentUser;
+	// 分页
+	protected Page<T> page;
+	
 	public String getCreateBy() {
 		return createBy;
 	}
@@ -75,8 +85,35 @@ public class BaseEty implements Serializable {
 		this.remark = remark;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Long getId() {
+		return id;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getCurrentUser() {
+		return currentUser;
+	}
+
+	public void setCurrentUser(String currentUser) {
+		this.currentUser = currentUser;
+	}
+
+	public Page<T> getPage() {
+		return page;
+	}
+
+	public void setPage(Page<T> page) {
+		this.page = page;
+	}
+
+	public void preInsert(){
+		
+	}
+
+	public void preUpdate(){
+		
+	}
 }

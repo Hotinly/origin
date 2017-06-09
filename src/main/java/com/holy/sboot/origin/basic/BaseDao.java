@@ -18,7 +18,7 @@ public interface BaseDao<T> {
 	 * @param id
 	 * @return
 	 */
-	public T get(int id);
+	public T get(Long id);
 
 	/**
 	 * 通过对象信息获取对象
