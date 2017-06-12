@@ -17,13 +17,29 @@ public interface BaseSvc<D, T> {
 	 * @param id
 	 * @return
 	 */
-	public T get(Long id);
+	public T get(T entity);
 
 	/**
-	 * 通过对象信息获取对象
+	 * 通过id删除单条数据
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public int delete(T entity);
+
+	/**
+	 * 插入数据
 	 * 
 	 * @param entity
 	 * @return
 	 */
-	public T get(T entity);
+	public int insert(T entity);
+
+	/**
+	 * 更新数据
+	 * 
+	 * @param entity
+	 * @return
+	 */
+	public int update(T entity);
 }

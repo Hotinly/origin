@@ -6,7 +6,8 @@ import com.holy.sboot.origin.basic.BaseSvc;
 import com.holy.sboot.origin.dao.UserDao;
 import com.holy.sboot.origin.entity.User;
 
-public interface SystemService extends BaseSvc<UserDao, User>{
+public interface UserService extends BaseSvc<UserDao, User>{
 
 	List<User> showUserList();
+	
 }

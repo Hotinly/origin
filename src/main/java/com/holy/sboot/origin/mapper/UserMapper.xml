@@ -1,191 +1,184 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.holy.sboot.origin.dao.UserDao">
-	<resultMap id="BaseResultMap" type="com.holy.sboot.origin.entity.User">
-		<id column="id" jdbcType="INTEGER" property="id" />
-		<result column="user_code" jdbcType="VARCHAR" property="userCode" />
-		<result column="user_name" jdbcType="VARCHAR" property="userName" />
-		<result column="password" jdbcType="VARCHAR" property="password" />
-		<result column="email" jdbcType="VARCHAR" property="email" />
-		<result column="photo" jdbcType="VARCHAR" property="photo" />
-		<result column="mobile" jdbcType="VARCHAR" property="mobile" />
-		<result column="description" jdbcType="VARCHAR" property="description" />
-		<result column="create_by" jdbcType="VARCHAR" property="createBy" />
-		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
-		<result column="update_by" jdbcType="VARCHAR" property="updateBy" />
-		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
-		<result column="status" jdbcType="BIT" property="status" />
-		<result column="remark" jdbcType="VARCHAR" property="remark" />
-	</resultMap>
-	<sql id="Base_Column_List">
-		id, user_code, user_name, password, email, photo, mobile,
-		description,
-		create_by,
-		create_date, update_by, update_date, status,
-		remark
-	</sql>
-<select id="showUserList" resultMap="BaseResultMap">
-	select
-	<include refid="Base_Column_List" />
-	from SYS_USER
-</select>
-	<select id="get" parameterType="java.lang.Long" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from sys_user
-		where id = #{id,jdbcType=INTEGER}
-	</select>
-	<!-- 逻辑删除用户 -->
-	<update id="delete">
-		UPDATE sys_user SET
-		status = #{STATUS_DELETE}
-		WHERE id
-		= #{id}
-	</update>
+    <resultMap id="BaseResultMap" type="com.holy.sboot.origin.entity.User">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="user_code" jdbcType="VARCHAR" property="userCode" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="photo" jdbcType="VARCHAR" property="photo" />
+        <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+        <result column="status" jdbcType="BIT" property="status" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_code, user_name, password, email, photo, mobile,
+        description,
+        create_by,
+        create_date, update_by, update_date, status,
+        remark
+    </sql>
+    <select id="showUserList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from SYS_USER
+    </select>
+    <select id="get" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from sys_user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <!-- 逻辑删除用户 -->
+    <update id="delete">
+        UPDATE sys_user SET
+        status = #{STATUS_DELETE}
+        WHERE id = #{id}
+    </update>
 
-	<insert id="insert" parameterType="com.holy.sboot.origin.entity.User">
-		insert into sys_user
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				id,
-			</if>
-			<if test="userCode != null">
-				user_code,
-			</if>
-			<if test="userName != null">
-				user_name,
-			</if>
-			<if test="password != null">
-				password,
-			</if>
-			<if test="email != null">
-				email,
-			</if>
-			<if test="photo != null">
-				photo,
-			</if>
-			<if test="mobile != null">
-				mobile,
-			</if>
-			<if test="description != null">
-				description,
-			</if>
-			<if test="createBy != null">
-				create_by,
-			</if>
-			<if test="createDate != null">
-				create_date,
-			</if>
-			<if test="updateBy != null">
-				update_by,
-			</if>
-			<if test="updateDate != null">
-				update_date,
-			</if>
-			<if test="status != null">
-				status,
-			</if>
-			<if test="remark != null">
-				remark,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=INTEGER},
-			</if>
-			<if test="userCode != null">
-				#{userCode,jdbcType=VARCHAR},
-			</if>
-			<if test="userName != null">
-				#{userName,jdbcType=VARCHAR},
-			</if>
-			<if test="password != null">
-				#{password,jdbcType=VARCHAR},
-			</if>
-			<if test="email != null">
-				#{email,jdbcType=VARCHAR},
-			</if>
-			<if test="photo != null">
-				#{photo,jdbcType=VARCHAR},
-			</if>
-			<if test="mobile != null">
-				#{mobile,jdbcType=VARCHAR},
-			</if>
-			<if test="description != null">
-				#{description,jdbcType=VARCHAR},
-			</if>
-			<if test="createBy != null">
-				#{createBy,jdbcType=VARCHAR},
-			</if>
-			<if test="createDate != null">
-				#{createDate,jdbcType=TIMESTAMP},
-			</if>
-			<if test="updateBy != null">
-				#{updateBy,jdbcType=VARCHAR},
-			</if>
-			<if test="updateDate != null">
-				#{updateDate,jdbcType=TIMESTAMP},
-			</if>
-			<if test="status != null">
-				#{status,jdbcType=BIT},
-			</if>
-			<if test="remark != null">
-				#{remark,jdbcType=VARCHAR},
-			</if>
-		</trim>
-	</insert>
-	<update id="update" parameterType="com.holy.sboot.origin.entity.User">
-		update sys_user
-		<set>
-			<if test="userCode != null">
-				user_code = #{userCode,jdbcType=VARCHAR},
-			</if>
-			<if test="userName != null">
-				user_name = #{userName,jdbcType=VARCHAR},
-			</if>
-			<if test="password != null">
-				password = #{password,jdbcType=VARCHAR},
-			</if>
-			<if test="email != null">
-				email = #{email,jdbcType=VARCHAR},
-			</if>
-			<if test="photo != null">
-				photo = #{photo,jdbcType=VARCHAR},
-			</if>
-			<if test="mobile != null">
-				mobile = #{mobile,jdbcType=VARCHAR},
-			</if>
-			<if test="description != null">
-				description = #{description,jdbcType=VARCHAR},
-			</if>
-			<if test="createBy != null">
-				create_by = #{createBy,jdbcType=VARCHAR},
-			</if>
-			<if test="createDate != null">
-				create_date = #{createDate,jdbcType=TIMESTAMP},
-			</if>
-			<if test="updateBy != null">
-				update_by = #{updateBy,jdbcType=VARCHAR},
-			</if>
-			<if test="updateDate != null">
-				update_date = #{updateDate,jdbcType=TIMESTAMP},
-			</if>
-			<if test="status != null">
-				status = #{status,jdbcType=BIT},
-			</if>
-			<if test="remark != null">
-				remark = #{remark,jdbcType=VARCHAR},
-			</if>
-		</set>
-		where id = #{id,jdbcType=INTEGER}
-	</update>
+    <insert id="insert">
+        insert into sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userCode != null">
+                user_code,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="photo != null">
+                photo,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userCode != null">
+                #{userCode,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="photo != null">
+                #{photo,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=BIT},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.holy.sboot.origin.entity.User">
+        update sys_user
+        <set>
+            <if test="userCode != null">
+                user_code = #{userCode,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="photo != null">
+                photo = #{photo,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=BIT},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
-	<!-- 更新用户密码 -->
-	<update id="updatePasswordById">
-		UPDATE sys_user SET
-		password = #{password}
-		WHERE id =
-		#{id}
-	</update>
+    <!-- 更新用户密码 -->
+    <update id="updatePasswordById">
+        UPDATE sys_user SET
+        password = #{password}
+        WHERE id =
+        #{id}
+    </update>
 
 </mapper>

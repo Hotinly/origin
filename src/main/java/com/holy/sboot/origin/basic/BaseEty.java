@@ -5,7 +5,6 @@ import java.util.Date;
 
 import com.github.pagehelper.Page;
 
-
 /**
  * 基础的公共信息类
  * 
@@ -27,6 +26,9 @@ public class BaseEty<T> implements Serializable {
 	private Date updateDate;
 	// 状态(0：无效； 1：有效; 2：处理中)
 	private String status;
+	public static final char STATUS_DELETE = '0';
+	public static final char STATUS_NORMAL = '1';
+	public static final char STATUS_AUDIT = '2';
 	// 备注
 	private String remark;
 
@@ -110,10 +112,10 @@ public class BaseEty<T> implements Serializable {
 	}
 
 	public void preInsert(){
-		
+		// TODO
 	}
 
 	public void preUpdate(){
-		
+		// TODO
 	}
 }

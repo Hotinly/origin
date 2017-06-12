@@ -13,32 +13,27 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class BaseSvcImpl<D extends BaseDao<T>, T extends BaseEty<T>> implements BaseSvc<D, T> {
 
-	/**
-	 * 持久层对象
-	 */
 	@Autowired
 	private D dao;
 
-	/**
-	 * 通过id获取单条数据
-	 * 
-	 * @param id
-	 * @return
-	 */
-	@Override
-	public T get(Long id) {
-		return dao.get(id);
-	}
-
-	/**
-	 * 通过对象信息获取对象
-	 * 
-	 * @param entity
-	 * @return
-	 */
 	@Override
 	public T get(T entity) {
 		return dao.get(entity);
+	}
+
+	@Override
+	public int delete(T entity) {
+		return dao.delete(entity);
+	}
+
+	@Override
+	public int insert(T entity) {
+		return dao.insert(entity);
+	}
+
+	@Override
+	public int update(T entity) {
+		return dao.update(entity);
 	}
 
 }

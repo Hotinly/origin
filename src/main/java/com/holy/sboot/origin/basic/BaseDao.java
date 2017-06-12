@@ -18,10 +18,11 @@ public interface BaseDao<T> {
 	 * @param id
 	 * @return
 	 */
+	@Deprecated
 	public T get(Long id);
 
 	/**
-	 * 通过对象信息获取对象
+	 * 删除数据（参数为对象） mapper映射文件中，不再需要参数parameterType，并可获取实体中的数据
 	 * 
 	 * @param entity
 	 * @return
@@ -42,7 +43,7 @@ public interface BaseDao<T> {
 	 * @param entity
 	 * @return
 	 */
-	public List<T> findAllList(T entity);
+	public List<T> findAllList();
 
 	/**
 	 * 插入数据
@@ -53,7 +54,16 @@ public interface BaseDao<T> {
 	public int insert(T entity);
 
 	/**
-	 * 删除数据（逻辑删除，status置为0）
+	 * 删除数据（id）（逻辑删除，status置为0）
+	 * 
+	 * @param entity
+	 * @return
+	 */
+	@Deprecated
+	public int delete(Long id);
+
+	/**
+	 * 删除数据（参数为对象） mapper映射文件中，不再需要参数parameterType，并可获取实体中的数据
 	 * 
 	 * @param entity
 	 * @return

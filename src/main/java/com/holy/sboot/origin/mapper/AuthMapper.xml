@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.holy.sboot.origin.dao.AuthDao">
+  <resultMap id="BaseResultMap" type="com.holy.sboot.origin.entity.Auth">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="auth_code" jdbcType="VARCHAR" property="authCode" />
+    <result column="auth_name" jdbcType="VARCHAR" property="authName" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="parent_ids" jdbcType="ARRAY" property="parentIds" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="uri" jdbcType="VARCHAR" property="uri" />
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
+    <result column="resource_type" jdbcType="VARCHAR" property="resourceType" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, auth_code, auth_name, parent_id, parent_ids, sort, uri, permission, resource_type, 
+    description, create_by, create_date, update_by, update_date, status, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_auth
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <update id="delete">
+    UPDATE sys_auth SET
+    status = #{STATUS_DELETE}
+    WHERE id = #{id}
+  </update>
+  <insert id="insert" parameterType="com.holy.sboot.origin.entity.Auth">
+    insert into sys_auth (id, auth_code, auth_name, 
+      parent_id, parent_ids, sort, 
+      uri, permission, resource_type, 
+      description, create_by, create_date, 
+      update_by, update_date, status, 
+      remark)
+    values (#{id,jdbcType=INTEGER}, #{authCode,jdbcType=VARCHAR}, #{authName,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=BIGINT}, #{parentIds,jdbcType=ARRAY}, #{sort,jdbcType=INTEGER}, 
+      #{uri,jdbcType=VARCHAR}, #{permission,jdbcType=VARCHAR}, #{resourceType,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{status,jdbcType=BIT}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.holy.sboot.origin.entity.Auth">
+    insert into sys_auth
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="authCode != null">
+        auth_code,
+      </if>
+      <if test="authName != null">
+        auth_name,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="parentIds != null">
+        parent_ids,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="uri != null">
+        uri,
+      </if>
+      <if test="permission != null">
+        permission,
+      </if>
+      <if test="resourceType != null">
+        resource_type,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="authCode != null">
+        #{authCode,jdbcType=VARCHAR},
+      </if>
+      <if test="authName != null">
+        #{authName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="parentIds != null">
+        #{parentIds,jdbcType=ARRAY},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="uri != null">
+        #{uri,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceType != null">
+        #{resourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.holy.sboot.origin.entity.Auth">
+    update sys_auth
+    <set>
+      <if test="authCode != null">
+        auth_code = #{authCode,jdbcType=VARCHAR},
+      </if>
+      <if test="authName != null">
+        auth_name = #{authName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="parentIds != null">
+        parent_ids = #{parentIds,jdbcType=ARRAY},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="uri != null">
+        uri = #{uri,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        permission = #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceType != null">
+        resource_type = #{resourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.holy.sboot.origin.entity.Auth">
+    update sys_auth
+    set auth_code = #{authCode,jdbcType=VARCHAR},
+      auth_name = #{authName,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      parent_ids = #{parentIds,jdbcType=ARRAY},
+      sort = #{sort,jdbcType=INTEGER},
+      uri = #{uri,jdbcType=VARCHAR},
+      permission = #{permission,jdbcType=VARCHAR},
+      resource_type = #{resourceType,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=BIT},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
