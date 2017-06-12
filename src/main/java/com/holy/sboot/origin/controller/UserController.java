@@ -11,20 +11,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.holy.sboot.origin.basic.BaseCtrl;
 import com.holy.sboot.origin.entity.User;
-import com.holy.sboot.origin.service.UserService;
+import com.holy.sboot.origin.service.SystemService;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/sys/user")
 public class UserController extends BaseCtrl {
 
 	@Autowired
-	private UserService userService;
-	
+	private SystemService userService;
+
 	@RequestMapping("/list")
 	@ResponseBody
-	public Map<String, Object> showUserList(){
+	public Map<String, Object> showUserList() {
 		Map<String, Object> map = new HashMap<>();
 		List<User> userList = userService.showUserList();
+		// User userList = userService.get(2L);
 		map.put("data", userList);
 		return map;
 	}

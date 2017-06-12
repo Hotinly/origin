@@ -29,7 +29,7 @@
 	<include refid="Base_Column_List" />
 	from SYS_USER
 </select>
-	<select id="get" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+	<select id="get" parameterType="java.lang.Long" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from sys_user
