@@ -1,6 +1,7 @@
 package com.holy.sboot.origin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,11 +20,27 @@ public class RoleController extends BaseCtrl {
 	@Autowired
 	private RoleService roleService;
 
+	@GetMapping("/search")
+	public JsonResponseMsg<Role> getRoleByName(Role role) {
+		if(StringUtils.isEmpty(role.getRoleEName()) && StringUtils.isEmpty(role.getRoleName())){
+			return JsonResponseMsg.createErrorResponseMsg();
+		}
+		Role rol = roleService.getRoleByName(role);
+		return JsonResponseMsg.createResponseMsg(rol);
+	}
+
+	@PostMapping("/updRoleAuth")
+	public JsonResponseMsg<String> updateRoleAuth(@RequestBody Role role) {
+		roleService.updateRoleAuth(role);
+		return JsonResponseMsg.createSuccessResponseMsg();
+	}
+
+	// ==============================================================\\
 	@GetMapping("/get")
 	public JsonResponseMsg<Role> getById(Role role) {
-		Role usr = roleService.get(role);
-		logger.debug(usr);
-		return JsonResponseMsg.createResponseMsg(usr);
+		Role rol = roleService.get(role);
+		logger.debug(rol);
+		return JsonResponseMsg.createResponseMsg(rol);
 	}
 
 	@PostMapping("/delete")

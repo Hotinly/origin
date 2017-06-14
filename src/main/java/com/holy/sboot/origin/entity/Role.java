@@ -22,7 +22,7 @@ public class Role extends BaseEty<Role> {
 	// 角色名称
 	private String roleName;
 	// 英文名称
-	private String roolEname;
+	private String roleEName;
 	// 数据范围
 	private Integer dataScope;
 	// 描述
@@ -65,12 +65,12 @@ public class Role extends BaseEty<Role> {
 		this.roleName = roleName;
 	}
 
-	public String getRoolEname() {
-		return roolEname;
+	public String getRoleEName() {
+		return roleEName;
 	}
 
-	public void setRoolEname(String roolEname) {
-		this.roolEname = roolEname;
+	public void setRoleEName(String roleEName) {
+		this.roleEName = roleEName;
 	}
 
 	public Integer getDataScope() {
@@ -113,4 +113,20 @@ public class Role extends BaseEty<Role> {
 		this.authList = authList;
 	}
 
+	public List<Long> getAuthIdList() {
+		List<Long> authIdList = new ArrayList<>();
+		for (Auth auth : authList) {
+			authIdList.add(auth.getId());
+		}
+		return authIdList;
+	}
+
+	public void setAuthIdList(List<Long> authIdList) {
+		authList = new ArrayList<>();
+		for (Long authId : authIdList) {
+			Auth auth = new Auth();
+			auth.setId(authId);
+			authList.add(auth);
+		}
+	}
 }

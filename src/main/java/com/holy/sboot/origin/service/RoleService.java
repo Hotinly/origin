@@ -6,4 +6,8 @@ import com.holy.sboot.origin.entity.Role;
 
 public interface RoleService extends BaseSvc<RoleDao, Role> {
 
+	public Role getRoleByName(Role role);
+
+	public void updateRoleAuth(Role role);
+
 }

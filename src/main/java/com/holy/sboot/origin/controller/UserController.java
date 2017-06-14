@@ -21,38 +21,38 @@ import com.holy.sboot.origin.service.UserService;
 public class UserController extends BaseCtrl {
 
 	@Autowired
-	private UserService systemService;
+	private UserService userService;
 
 	@GetMapping("/list")
 	public Map<String, Object> showUserList() {
 		Map<String, Object> map = new HashMap<>();
-		List<User> userList = systemService.showUserList();
+		List<User> userList = userService.showUserList();
 		map.put("data", userList);
 		return map;
 	}
 
 	@GetMapping("/get")
 	public JsonResponseMsg<User> getById(User user) {
-		User usr = systemService.get(user);
+		User usr = userService.get(user);
 		logger.debug(usr);
 		return JsonResponseMsg.createResponseMsg(usr);
 	}
 
 	@PostMapping("/delete")
 	public JsonResponseMsg<String> delete(@RequestBody User user) {
-		int row = systemService.delete(user);
+		int row = userService.delete(user);
 		return JsonResponseMsg.createResponseMsg(row);
 	}
 
 	@PostMapping("/insert")
 	public JsonResponseMsg<String> insert(@RequestBody User user) {
-		int row = systemService.insert(user);
+		int row = userService.insert(user);
 		return JsonResponseMsg.createResponseMsg(row);
 	}
 
 	@PostMapping("/update")
 	public JsonResponseMsg<String> update(@RequestBody User user) {
-		int row = systemService.update(user);
+		int row = userService.update(user);
 		return JsonResponseMsg.createResponseMsg(row);
 	}
 	

@@ -5,7 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="role_code" jdbcType="VARCHAR" property="roleCode" />
     <result column="role_name" jdbcType="VARCHAR" property="roleName" />
-    <result column="rool_ename" jdbcType="VARCHAR" property="roolEname" />
+    <result column="role_ename" jdbcType="VARCHAR" property="roleEName" />
     <result column="data_scope" jdbcType="SMALLINT" property="dataScope" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
@@ -14,9 +14,12 @@
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
     <result column="status" jdbcType="CHAR" property="status" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <collection property="authList" ofType="com.holy.sboot.origin.entity.Auth">
+      <id property="id" column="authList.id" />
+    </collection>
   </resultMap>
   <sql id="Base_Column_List">
-    id, role_code, role_name, rool_ename, data_scope, description, create_by, create_date, 
+    id, role_code, role_name, role_ename, data_scope, description, create_by, create_date, 
     update_by, update_date, status, remark
   </sql>
   <select id="get" resultMap="BaseResultMap">
@@ -31,31 +34,16 @@
     WHERE id = #{id}
   </update>
   <insert id="insert" parameterType="com.holy.sboot.origin.entity.Role">
-    insert into sys_role (id, role_code, role_name, 
-      rool_ename, data_scope, description, 
-      create_by, create_date, update_by, 
-      update_date, status, remark
-      )
-    values (#{id,jdbcType=INTEGER}, #{roleCode,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, 
-      #{roolEname,jdbcType=VARCHAR}, #{dataScope,jdbcType=SMALLINT}, #{description,jdbcType=VARCHAR}, 
-      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
-      #{updateDate,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.holy.sboot.origin.entity.Role">
     insert into sys_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="roleCode != null">
         role_code,
       </if>
       <if test="roleName != null">
         role_name,
       </if>
-      <if test="roolEname != null">
-        rool_ename,
+      <if test="roleEName != null">
+        rrole_enamel_ename,
       </if>
       <if test="dataScope != null">
         data_scope,
@@ -83,17 +71,14 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="roleCode != null">
         #{roleCode,jdbcType=VARCHAR},
       </if>
       <if test="roleName != null">
         #{roleName,jdbcType=VARCHAR},
       </if>
-      <if test="roolEname != null">
-        #{roolEname,jdbcType=VARCHAR},
+      <if test="roleEName != null">
+        #{roleEName,jdbcType=VARCHAR},
       </if>
       <if test="dataScope != null">
         #{dataScope,jdbcType=SMALLINT},
@@ -121,7 +106,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.holy.sboot.origin.entity.Role">
+  <update id="update" parameterType="com.holy.sboot.origin.entity.Role">
     update sys_role
     <set>
       <if test="roleCode != null">
@@ -130,8 +115,8 @@
       <if test="roleName != null">
         role_name = #{roleName,jdbcType=VARCHAR},
       </if>
-      <if test="roolEname != null">
-        rool_ename = #{roolEname,jdbcType=VARCHAR},
+      <if test="roleEName != null">
+        role_ename = #{roleEName,jdbcType=VARCHAR},
       </if>
       <if test="dataScope != null">
         data_scope = #{dataScope,jdbcType=SMALLINT},
@@ -160,19 +145,28 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.holy.sboot.origin.entity.Role">
-    update sys_role
-    set role_code = #{roleCode,jdbcType=VARCHAR},
-      role_name = #{roleName,jdbcType=VARCHAR},
-      rool_ename = #{roolEname,jdbcType=VARCHAR},
-      data_scope = #{dataScope,jdbcType=SMALLINT},
-      description = #{description,jdbcType=VARCHAR},
-      create_by = #{createBy,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      update_by = #{updateBy,jdbcType=VARCHAR},
-      update_date = #{updateDate,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=CHAR},
-      remark = #{remark,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
+  <select id="getByName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_role r
+    where
+    <if test="roleName != null">
+        r.role_name = #{roleName,jdbcType=TIMESTAMP}
+    </if>
+    <if test="roleEName != null">
+        r.role_ename = #{roleEName,jdbcType=TIMESTAMP}
+    </if>
+    and r.status = #{STATUS_NORMAL}
+  </select>
+  <delete id="deleteRoleAuth">
+    delete from sys_role_auth where role_id = #{id}
+  </delete>
+  <insert id="insertRoleAuth">
+    insert into sys_role_auth(role_id, auth_id)
+    <foreach collection="authList" item="auth" separator="union all">
+      select #{id}, #{auth.id}
+    </foreach>
+  </insert>
+  
 </mapper>
