@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.holy.sboot.origin.dao.UserDao">
+<!-- 
     <resultMap id="BaseResultMap" type="com.holy.sboot.origin.entity.User">
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="user_code" jdbcType="VARCHAR" property="userCode" />
@@ -16,7 +17,7 @@
         <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
         <result column="status" jdbcType="BIT" property="status" />
         <result column="remark" jdbcType="VARCHAR" property="remark" />
-    </resultMap>
+    </resultMap> -->
     <sql id="Base_Column_List">
         id, user_code, user_name, password, email, photo, mobile,
         description,
@@ -24,23 +25,54 @@
         create_date, update_by, update_date, status,
         remark
     </sql>
-    <select id="showUserList" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from SYS_USER
+    
+    <sql id="roleIds">
+        select role_id from sys_user_role where user_id = #{id}
+    </sql>
+    
+    <!-- 查询角色id -->
+    <select id="getRoleIds" resultType="long" >
+        <include refid="roleIds" />
     </select>
-    <select id="get" parameterType="java.lang.Long" resultMap="BaseResultMap">
+
+    <!-- 查询所有用户 -->
+    <select id="showUserList" resultType="user">
         select
         <include refid="Base_Column_List" />
         from sys_user
-        where id = #{id,jdbcType=INTEGER}
     </select>
+
+    <!-- 维护用户-角色关系 -->
+    <delete id="deleteUserRole">
+        delete from sys_user_role where user_id = #{id}
+    </delete>
+    <insert id="insertUserRole">
+        insert into sys_user_role(user_id, role_id)
+        <foreach collection="roleList" item="role" separator="union all">
+            select #{id}, #{role.id}
+        </foreach>
+    </insert>
+
     <!-- 逻辑删除用户 -->
     <update id="delete">
         UPDATE sys_user SET
         status = #{STATUS_DELETE}
         WHERE id = #{id}
     </update>
+
+    <!-- 更改用户密码 -->
+    <update id="updatePasswordById">
+        UPDATE sys_user SET
+        password = #{password}
+        WHERE id = #{id}
+    </update>
+
+    <select id="get" parameterType="java.lang.Long" resultType="user">
+        select
+        <include refid="Base_Column_List" />
+        from sys_user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
 
     <insert id="insert">
         insert into sys_user
@@ -127,7 +159,7 @@
             </if>
         </trim>
     </insert>
-    <update id="update" parameterType="com.holy.sboot.origin.entity.User">
+    <update id="update" parameterType="user">
         update sys_user
         <set>
             <if test="userCode != null">
@@ -171,14 +203,6 @@
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
-    </update>
-
-    <!-- 更新用户密码 -->
-    <update id="updatePasswordById">
-        UPDATE sys_user SET
-        password = #{password}
-        WHERE id =
-        #{id}
     </update>
 
 </mapper>

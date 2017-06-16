@@ -13,5 +13,11 @@ public interface UserDao extends BaseDao<User> {
 
 	public List<User> showUserList();
 
-	
+	/**
+	 * 通过userId获取对应的roleIds(暂为一个)
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public List<Long> getRoleIds(Long userId);
 }

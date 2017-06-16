@@ -129,4 +129,14 @@ public class Role extends BaseEty<Role> {
 			authList.add(auth);
 		}
 	}
+
+	@Override
+	public String toString() {
+		final int maxLen = 10;
+		return "Role [id=" + id + ", roleCode=" + roleCode + ", roleName=" + roleName + ", roleEName=" + roleEName
+				+ ", dataScope=" + dataScope + ", description=" + description + ", user=" + user + ", userList="
+				+ (userList != null ? userList.subList(0, Math.min(userList.size(), maxLen)) : null) + ", authList="
+				+ (authList != null ? authList.subList(0, Math.min(authList.size(), maxLen)) : null) + "]";
+	}
+
 }

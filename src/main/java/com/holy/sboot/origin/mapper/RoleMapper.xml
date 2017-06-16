@@ -22,6 +22,22 @@
     id, role_code, role_name, role_ename, data_scope, description, create_by, create_date, 
     update_by, update_date, status, remark
   </sql>
+  
+  
+  <select id="getRoleList" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from sys_role
+      where id in
+      <foreach item="id" collection="roleIds" open="(" close=")" separator=",">
+          #{id,jdbcType=BIGINT}
+      </foreach>
+  </select>
+  
+  
+  
+  
+  
   <select id="get" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

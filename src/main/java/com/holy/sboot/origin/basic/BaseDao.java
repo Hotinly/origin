@@ -22,7 +22,7 @@ public interface BaseDao<T> {
 	public T get(Long id);
 
 	/**
-	 * 删除数据（参数为对象） mapper映射文件中，不再需要参数parameterType，并可获取实体中的数据
+	 * 查询数据（参数为对象） mapper映射文件中，不再需要参数parameterType，并可获取实体中的数据
 	 * 
 	 * @param entity
 	 * @return
